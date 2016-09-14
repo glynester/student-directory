@@ -14,3 +14,8 @@ puts "Norman Bates"
 puts "The big green blob"
 puts "Jonny Rotten"
 puts "Dick Dastardly"
+
+print "Overall, we have "
+print 11
+puts " great students"
+
