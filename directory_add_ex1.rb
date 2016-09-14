@@ -1,5 +1,6 @@
 #I will do the exercises at the end.
 @students = []         #An empty array accessible to all methods.
+@student_st_lett
 
 def interactive_menu 
   loop do
@@ -18,9 +19,18 @@ def print_menu
 end      
 
 def show_students
+    puts "Press \"Enter\" to return ALL students or enter a letter to show only student names beginning with that letter."
+     @student_st_lett = gets.chomp
+    if @student_st_lett.empty?
+        @student_st_lett = "all" 
+    else    
+        @student_st_lett = @student_st_lett[0].downcase  #first char selected if multiple are entered.
+    end
+    #puts @student_st_lett; puts "$$$$$$$$$$$$$$$$$$$$$$$$"
     print_header
     print_students_list
     print_footer
+     @student_st_lett = ""
 end  
 
 def process(selection)
@@ -44,7 +54,6 @@ def input_students
     puts "Enter a student's name."
     puts "Enter nothing to complete entry."
     val = gets.chomp
-    #students_entries = []
     while !val.empty?
         @students << {name: val, cohort: :november}
         puts "We now have #{@students.count} students entered."
@@ -60,7 +69,9 @@ end
 
 def print_students_list
     @students.each_with_index do |name, indx|
-        puts "No: #{indx+1} => #{name[:name]} (#{name[:cohort]} cohort)"
+        if name[:name][0].downcase == @student_st_lett || @student_st_lett == "all"
+            puts "No: #{indx+1} => #{name[:name]} (#{name[:cohort]} cohort)"
+        end    
     end
 end    
 
