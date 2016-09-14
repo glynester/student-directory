@@ -2,10 +2,9 @@
 @students = []         #An empty array accessible to all methods.
 
 def interactive_menu 
-  #students = []
   loop do
       print_menu
-      process(gets.chomp)
+      process(STDIN.gets.chomp) #Note STDIN required to "reset" 'gets' after it has read the file argument from the command line.
   end
 end
 
@@ -79,14 +78,28 @@ def save_students
     file.close
 end
 
-def load_students
-   file = File.open("students.csv","r")
+def load_students (filename = "students.csv") #If "try_load_students" does not supply the file, then the default is used.   
+   file = File.open(filename,"r")
    file.readlines.each{|student|
        name, cohort = student.chomp.split(",")
        @students << {name: name, cohort: cohort.to_sym}
    }
    file.close
+end  
+
+def try_load_students
+    filename = ARGV.first   #First arg = "XXX" after the program call "directory.rb XXX"
+    return if filename.nil? #Abort trying to load a "non-default" (default = "students.csv") source file as no argument was supplied
+    if File.exists?(filename)
+        load_students(filename) #If the file exists it is passed to "load_students"
+        puts "Loaded #{@students.count} students from file: \"#{filename}\""
+    else
+        puts "Error: File \"#{filename}\" does not exist."
+    end    
 end    
+
+try_load_students
+interactive_menu
 
 interactive_menu
 
@@ -98,6 +111,3 @@ students = [{name: "Dr. Hannibal Lecter", cohort: :november},{name: "Darth Vader
 {name: "The Joker", cohort: :november},{name: "Joffrey Baratheon", cohort: :november},
 {name: "Norman Bates", cohort: :november}]
 =end
-
-
-
