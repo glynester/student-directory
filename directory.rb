@@ -1,12 +1,27 @@
+#I will do the exercises at the end.
+def interactive_menu 
+  students = []
+  loop do
+      puts "Enter the number corresponding to one of the following options:"
+      puts "1 = Input the students"
+      puts "2 = Show the students"
+      puts "9 = Exit"
+      selection = gets.chomp
+      case selection
+      when "1"
+          students = input_students
+      when "2"
+          print_header
+          print_names (students)
+          print_footer (students)
+      when "9"
+          exit
+      else
+          puts "That selection was not recognised!!!"
+      end      
+  end
+end
 
-=begin
-students = [{name: "Dr. Hannibal Lecter", cohort: :november},{name: "Darth Vader", cohort: :november},
-{name: "Nurse Ratched", cohort: :november},{name: "Michael Corleone", cohort: :november},
-{name: "Alex DeLarge", cohort: :november},{name: "The Wicked Witch of the West", cohort: :november},
-{name: "Terminator", cohort: :november},{name: "Freddy Krueger", cohort: :november},
-{name: "The Joker", cohort: :november},{name: "Joffrey Baratheon", cohort: :november},
-{name: "Norman Bates", cohort: :november}]
-=end
 
 def input_students
     puts "Enter a student's name."
@@ -36,10 +51,16 @@ def print_footer (names)
     print "Overall, we have #{names.count} great students"
 end
 
-students = input_students
-print_header
-print_names (students)
-print_footer (students)
+interactive_menu
+
+=begin
+students = [{name: "Dr. Hannibal Lecter", cohort: :november},{name: "Darth Vader", cohort: :november},
+{name: "Nurse Ratched", cohort: :november},{name: "Michael Corleone", cohort: :november},
+{name: "Alex DeLarge", cohort: :november},{name: "The Wicked Witch of the West", cohort: :november},
+{name: "Terminator", cohort: :november},{name: "Freddy Krueger", cohort: :november},
+{name: "The Joker", cohort: :november},{name: "Joffrey Baratheon", cohort: :november},
+{name: "Norman Bates", cohort: :november}]
+=end
 
 
 
