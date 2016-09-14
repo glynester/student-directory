@@ -19,6 +19,7 @@ def print_menu
 end      
 
 def show_students
+    puts "Note: Only names shorter than 12 characters will be displayed."
     puts "Press \"Enter\" to return ALL students or enter a letter to show only student names beginning with that letter."
      @student_st_lett = gets.chomp
     if @student_st_lett.empty?
@@ -69,7 +70,7 @@ end
 
 def print_students_list
     @students.each_with_index do |name, indx|
-        if name[:name][0].downcase == @student_st_lett || @student_st_lett == "all"
+        if name[:name].length <= 12 && (name[:name][0].downcase == @student_st_lett || @student_st_lett == "all")
             puts "No: #{indx+1} => #{name[:name]} (#{name[:cohort]} cohort)"
         end    
     end
