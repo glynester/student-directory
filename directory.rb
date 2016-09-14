@@ -1,39 +1,51 @@
 #I will do the exercises at the end.
+@students = []         #An empty array accessible to all methods.
+
 def interactive_menu 
-  students = []
+  #students = []
   loop do
-      puts "Enter the number corresponding to one of the following options:"
-      puts "1 = Input the students"
-      puts "2 = Show the students"
-      puts "9 = Exit"
-      selection = gets.chomp
-      case selection
+      print_menu
+      process(gets.chomp)
+  end
+end
+
+def print_menu
+    puts "Enter the number corresponding to one of the following options:"
+    puts "1 = Input the students"
+    puts "2 = Show the students"
+    puts "9 = Exit"
+end      
+
+def show_students
+    print_header
+    print_students_list
+    print_footer
+end  
+
+def process(selection)
+    case selection
       when "1"
           students = input_students
       when "2"
-          print_header
-          print_names (students)
-          print_footer (students)
+          show_students
       when "9"
           exit
       else
           puts "That selection was not recognised!!!"
-      end      
-  end
-end
-
+    end          
+end    
 
 def input_students
     puts "Enter a student's name."
     puts "Enter nothing to complete entry."
     val = gets.chomp
-    students_entries = []
+    #students_entries = []
     while !val.empty?
-        students_entries << {name: val, cohort: :november}
-        puts "We now have #{students_entries.count} students entered."
+        @students << {name: val, cohort: :november}
+        puts "We now have #{@students.count} students entered."
         val = gets.chomp
     end
-    students_entries
+    #students_entries
 end    
 
 def print_header
@@ -41,14 +53,14 @@ def print_header
     puts "________________________________"
 end
 
-def print_names (names)
-    names.each do |name|
+def print_students_list
+    @students.each do |name|
         puts "#{name[:name]} (#{name[:cohort]} cohort)"
     end
 end    
 
-def print_footer (names)
-    print "Overall, we have #{names.count} great students"
+def print_footer
+    puts "Overall, we have #{@students.count} great students"
 end
 
 interactive_menu
