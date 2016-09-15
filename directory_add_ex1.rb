@@ -154,7 +154,7 @@ def print_students_list
 end    
 
 def print_footer
-    puts "Overall, we have #{@students.count} great students"
+    puts "Overall, we have #{@students.count} great student#{@students.count == 1 ? "." : "s."}"
 end
 
 def save_students
