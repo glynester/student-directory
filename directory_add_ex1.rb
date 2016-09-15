@@ -69,11 +69,32 @@ def print_header
 end
 
 def print_students_list
+    #This is an alternative version to the 2 ways commented out below done using "while".
+    count = 0
+    while count < @students.length 
+        if @students[count][:name].length <= 12 && (@students[count][:name][0].downcase == @student_st_lett || @student_st_lett == "all")
+            puts "No: #{count+1} => #{@students[count][:name]} (#{@students[count][:cohort]} cohort)"
+        end        
+        count += 1
+    end    
+=begin
+    This is an alternative version of the "each_with_index" below but using "until". This code works!
+    count = 0
+    until count >= @students.length 
+        if @students[count][:name].length <= 12 && (@students[count][:name][0].downcase == @student_st_lett || @student_st_lett == "all")
+            puts "No: #{count+1} => #{@students[count][:name]} (#{@students[count][:cohort]} cohort)"
+        end        
+        count += 1
+    end
+=end    
+=begin    
+    Code below rewritten as an "until" loop above. This code works!
     @students.each_with_index do |name, indx|
         if name[:name].length <= 12 && (name[:name][0].downcase == @student_st_lett || @student_st_lett == "all")
             puts "No: #{indx+1} => #{name[:name]} (#{name[:cohort]} cohort)"
         end    
     end
+=end    
 end    
 
 def print_footer
