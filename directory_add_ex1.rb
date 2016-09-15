@@ -97,18 +97,38 @@ end
 
 def print_students_list
     #This is an alternative version to the 2 ways commented out below done using "while".
+    
+    puts "Do you want to print out all cohorts? Enter the month of the cohort, e.g. \"September\" to restrict the listing to that cohort only."
+    puts "If you want to see all cohorts, just press enter."
+    display_cohort = STDIN.gets.chomp.downcase
+
+    if display_cohort.empty?
+        display_cohort = "all" 
+    end  
+    
+    students_by_cohort =  @students             #Sorts into cohort order.
+    students_by_cohort = students_by_cohort.sort_by {|entry|
+        [entry[:cohort]]
+    }
+    
+    if display_cohort != "all"
+        students_by_cohort = students_by_cohort.delete_if {|value| 
+            value[:cohort].to_s.downcase != display_cohort
+        }
+    end
+    
     count = 0
-    while count < @students.length 
-        if @students[count][:name].length <= 12 && (@students[count][:name][0].downcase == @student_st_lett || @student_st_lett == "all")
+    while count < students_by_cohort.length 
+        if students_by_cohort[count][:name].length <= 12 && (students_by_cohort[count][:name][0].downcase == @student_st_lett || @student_st_lett == "all")
         #    puts "No: #{count+1} => #{@students[count][:name]} (#{@students[count][:cohort]} cohort) "\
         #    "#{@students[count][:countryofbirth]} #{@students[count][:hobbies]} #{@students[count][:height]} "\
         #    "#{@students[count][:weight]}"
-        name_pr = "No: #{count+1} => #{@students[count][:name]}"
-        cohort_pr = "(#{@students[count][:cohort]} cohort)"
-        cob_pr = "#{@students[count][:countryofbirth]}"
-        hob_pr = "#{@students[count][:hobbies]}"
-        height_pr = "#{@students[count][:height]}"
-        weight_pr = "#{@students[count][:weight]}"
+        name_pr = "No: #{count+1} => #{students_by_cohort[count][:name]}"
+        cohort_pr = "(#{students_by_cohort[count][:cohort]} cohort)"
+        cob_pr = "#{students_by_cohort[count][:countryofbirth]}"
+        hob_pr = "#{students_by_cohort[count][:hobbies]}"
+        height_pr = "#{students_by_cohort[count][:height]}"
+        weight_pr = "#{students_by_cohort[count][:weight]}"
         puts name_pr.ljust(20) + cohort_pr.ljust(20) + cob_pr.ljust(20) + hob_pr.ljust(20) + height_pr.ljust(20) + weight_pr.ljust(20)
         end        
         count += 1
@@ -180,4 +200,9 @@ students = [{name: "Dr. Hannibal Lecter", cohort: :november},{name: "Darth Vader
 {name: "Terminator", cohort: :november},{name: "Freddy Krueger", cohort: :november},
 {name: "The Joker", cohort: :november},{name: "Joffrey Baratheon", cohort: :november},
 {name: "Norman Bates", cohort: :november}]
+=end
+
+=begin
+@students = [{:name=>"Jason", :cohort=>:november, :countryofbirth=>:Zaire, :hobbies=>:tennis, :height=>:"6ft", 
+:weight=>:"80kg"}, etc.]
 =end
