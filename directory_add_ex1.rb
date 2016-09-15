@@ -6,7 +6,8 @@
 def interactive_menu 
   loop do
       print_menu
-      process(STDIN.gets.chomp) #Note STDIN required to "reset" 'gets' after it has read the file argument from the command line.
+      #process(STDIN.gets.chomp) #Note STDIN required to "reset" 'gets' after it has read the file argument from the command line.
+      process(STDIN.gets.gsub(/\n/,"")) #Alternative to ".chomp". Repeat for other occurrences of ".chomp".
   end
 end
 
