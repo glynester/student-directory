@@ -56,47 +56,20 @@
     end    
     
     def input_students
-        arr = get_student_userdata
-        name, cohort, cob, hob, height, weight = arr
-        val = name
-        
-=begin        
-        puts "Enter a student's name. Enter nothing to complete entry."
-        puts "Enter a comma and then the cohort value. The default cohort \"#{@default_cohort}\" will be used if nothing is entered."
-        val = STDIN.gets.chomp
-        if val.empty?
+        arr1 = get_student_userdata
+        name, cohort, cob, hob, height, weight = arr1
+        if name.empty?
             puts "No entry was made."
             return
-        else
-            name, cohort = val.split(",").map(&:strip)
         end
-        cohort = @default_cohort if cohort.nil?
-        puts "Enter the country of birth of the student."
-        cob = STDIN.gets.chomp 
-        puts "Enter the student's hobbies."
-        hob = STDIN.gets.chomp
-        puts "Enter the student's height."
-        height = STDIN.gets.chomp
-        puts "Enter the student's weight."
-        weight = STDIN.gets.chomp
-=end        
-        while !val.empty?
+        while !name.empty?
             add_to_array(name, cohort, cob, hob, height, weight)
-            
-            puts "Enter a student's name. Enter nothing to complete entry."
-            val = STDIN.gets.chomp
-            if val.empty?
+            arr2 = get_student_userdata
+            name, cohort, cob, hob, height, weight = arr2
+            if name.empty?
                 puts "We now have #{@students.count} students entered." if @students.count > 1 
                 return
-            end
-            puts "Enter the country of birth of the student."
-            cob = STDIN.gets.chomp
-            puts "Enter the student's hobbies."
-            hob = STDIN.gets.chomp
-            puts "Enter the student's height."
-            height = STDIN.gets.chomp
-            puts "Enter the student's weight."
-            weight = STDIN.gets.chomp
+            end   
         end
     end 
     
@@ -105,8 +78,8 @@
         puts "Enter a comma and then the cohort value. The default cohort \"#{@default_cohort}\" will be used if nothing is entered."
         val = STDIN.gets.chomp
         if val.empty?
-            puts "No entry was made."
-            return
+            #puts "No entry was made."
+            return [""] #Returning a value for name of ""
         else
             name, cohort = val.split(",").map(&:strip)
         end
