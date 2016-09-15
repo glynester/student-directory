@@ -86,8 +86,8 @@ def input_students
 end    
 
 def print_header
-    puts "The Students of Villains Academy"
-    puts "________________________________"
+    puts "The Students of Villains Academy".center(100)
+    puts "________________________________".center(100)
 end
 
 def print_students_list
@@ -95,9 +95,16 @@ def print_students_list
     count = 0
     while count < @students.length 
         if @students[count][:name].length <= 12 && (@students[count][:name][0].downcase == @student_st_lett || @student_st_lett == "all")
-            puts "No: #{count+1} => #{@students[count][:name]} (#{@students[count][:cohort]} cohort) 
-            #{@students[count][:countryofbirth]} #{@students[count][:hobbies]} #{@students[count][:height]} 
-            #{@students[count][:weight]}"
+        #    puts "No: #{count+1} => #{@students[count][:name]} (#{@students[count][:cohort]} cohort) "\
+        #    "#{@students[count][:countryofbirth]} #{@students[count][:hobbies]} #{@students[count][:height]} "\
+        #    "#{@students[count][:weight]}"
+        name_pr = "No: #{count+1} => #{@students[count][:name]}"
+        cohort_pr = "(#{@students[count][:cohort]} cohort)"
+        cob_pr = "#{@students[count][:countryofbirth]}"
+        hob_pr = "#{@students[count][:hobbies]}"
+        height_pr = "#{@students[count][:height]}"
+        weight_pr = "#{@students[count][:weight]}"
+        puts name_pr.ljust(20) + cohort_pr.ljust(20) + cob_pr.ljust(20) + hob_pr.ljust(20) + height_pr.ljust(20) + weight_pr.ljust(20)
         end        
         count += 1
     end    
