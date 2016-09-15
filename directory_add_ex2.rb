@@ -6,7 +6,6 @@
     def interactive_menu 
       loop do
           print_menu
-          #process(STDIN.gets.chomp) #Note STDIN required to "reset" 'gets' after it has read the file argument from the command line.
           process(STDIN.gets.gsub(/\n/,"")) #Alternative to ".chomp". Repeat for other occurrences of ".chomp".
       end
     end
@@ -77,7 +76,6 @@
         weight = STDIN.gets.chomp
         
         while !val.empty?
-            #@students << {name: name, cohort: cohort, countryofbirth: cob, hobbies: hob, height: height, weight: weight}
             add_to_array(name, cohort, cob, hob, height, weight)
             
             puts "Enter a student's name. Enter nothing to complete entry."
@@ -133,9 +131,6 @@
         count = 0
         while count < students_by_cohort.length 
             if students_by_cohort[count][:name].length <= 12 && (students_by_cohort[count][:name][0].downcase == @student_st_lett || @student_st_lett == "all")
-            #    puts "No: #{count+1} => #{@students[count][:name]} (#{@students[count][:cohort]} cohort) "\
-            #    "#{@students[count][:countryofbirth]} #{@students[count][:hobbies]} #{@students[count][:height]} "\
-            #    "#{@students[count][:weight]}"
             name_pr = "No: #{count+1} => #{students_by_cohort[count][:name]}"
             cohort_pr = "(#{students_by_cohort[count][:cohort]} cohort)"
             cob_pr = "#{students_by_cohort[count][:countryofbirth]}"
@@ -146,24 +141,6 @@
             end        
             count += 1
         end    
-=begin
-        This is an alternative version of the "each_with_index" below but using "until". This code works!
-        count = 0
-        until count >= @students.length 
-            if @students[count][:name].length <= 12 && (@students[count][:name][0].downcase == @student_st_lett || @student_st_lett == "all")
-                puts "No: #{count+1} => #{@students[count][:name]} (#{@students[count][:cohort]} cohort)"
-            end        
-            count += 1
-        end
-=end    
-=begin    
-        Code below rewritten as an "until" loop above. This code works!
-        @students.each_with_index do |name, indx|
-            if name[:name].length <= 12 && (name[:name][0].downcase == @student_st_lett || @student_st_lett == "all")
-                puts "No: #{indx+1} => #{name[:name]} (#{name[:cohort]} cohort)"
-            end    
-        end
-=end    
     end    
     
     def print_footer
