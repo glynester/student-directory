@@ -194,7 +194,11 @@
     
     def try_load_students
         filename = ARGV.first   #First arg = "XXX" after the program call "directory.rb XXX"
-        return if filename.nil? #Abort trying to load a "non-default" (default = "students.csv") source file as no argument was supplied
+        #return if filename.nil? #Abort trying to load a "non-default" (default = "students.csv") source file as no argument was supplied
+        if filename.nil?
+            load_students("students.csv")
+            return
+        end    
         if File.exists?(filename)
             load_students(filename) #If the file exists it is passed to "load_students"
             puts "Loaded #{@students.count} students from file: \"#{filename}\""
