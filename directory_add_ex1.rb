@@ -1,6 +1,7 @@
 #Does not handle commas in data entry when saved to csv. Commas need to be escaped or complete entry needs to be put in quotes.
 @students = []         #An empty array accessible to all methods.
 @student_st_lett = ""
+@default_cohort = "September"
 
 def interactive_menu 
   loop do
@@ -52,11 +53,15 @@ end
 
 def input_students
     puts "Enter a student's name. Enter nothing to complete entry."
+    puts "Enter a comma and then the cohort value. The default cohort \"#{@default_cohort}\" will be used if nothing is entered."
     val = STDIN.gets.chomp
     if val.empty?
         puts "No entry was made."
         return
+    else
+        name, cohort = val.split(",").map(&:strip)
     end
+    cohort = @default_cohort if cohort.nil?
     puts "Enter the country of birth of the student."
     cob = STDIN.gets.chomp 
     puts "Enter the student's hobbies."
@@ -67,7 +72,7 @@ def input_students
     weight = STDIN.gets.chomp
     
     while !val.empty?
-        @students << {name: val, cohort: :november, countryofbirth: cob, hobbies: hob, height: height, weight: weight}
+        @students << {name: name, cohort: cohort, countryofbirth: cob, hobbies: hob, height: height, weight: weight}
         puts "Enter a student's name. Enter nothing to complete entry."
         val = STDIN.gets.chomp
         if val.empty?
