@@ -56,6 +56,11 @@
     end    
     
     def input_students
+        arr = get_student_userdata
+        name, cohort, cob, hob, height, weight = arr
+        val = name
+        
+=begin        
         puts "Enter a student's name. Enter nothing to complete entry."
         puts "Enter a comma and then the cohort value. The default cohort \"#{@default_cohort}\" will be used if nothing is entered."
         val = STDIN.gets.chomp
@@ -74,7 +79,7 @@
         height = STDIN.gets.chomp
         puts "Enter the student's weight."
         weight = STDIN.gets.chomp
-        
+=end        
         while !val.empty?
             add_to_array(name, cohort, cob, hob, height, weight)
             
@@ -94,6 +99,28 @@
             weight = STDIN.gets.chomp
         end
     end 
+    
+    def get_student_userdata
+        puts "Enter a student's name. Enter nothing to complete entry."
+        puts "Enter a comma and then the cohort value. The default cohort \"#{@default_cohort}\" will be used if nothing is entered."
+        val = STDIN.gets.chomp
+        if val.empty?
+            puts "No entry was made."
+            return
+        else
+            name, cohort = val.split(",").map(&:strip)
+        end
+        cohort = @default_cohort if cohort.nil?
+        puts "Enter the country of birth of the student."
+        cob = STDIN.gets.chomp 
+        puts "Enter the student's hobbies."
+        hob = STDIN.gets.chomp
+        puts "Enter the student's height."
+        height = STDIN.gets.chomp
+        puts "Enter the student's weight."
+        weight = STDIN.gets.chomp
+        [name, cohort, cob, hob, height, weight]
+    end
     
     #New method to comply with DRY principle - called twice!!!
     def add_to_array (name, cohort, countryofbirth, hobbies, height, weight)  
