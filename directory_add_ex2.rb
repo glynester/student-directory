@@ -15,7 +15,8 @@
         puts "1 = Input the students"
         puts "2 = Show the students"
         puts "3 = Save the students to a file"
-        puts "4 = Load the list from \"students.csv\""
+        #puts "4 = Load the list from \"students.csv\""
+        puts "4 = Choose the students source file to load"
         puts "9 = Exit"
     end      
     
@@ -47,7 +48,8 @@
           when "3"
               save_students
           when "4"
-              load_students
+              #load_students
+              load_file
           when "9"
               puts "The program has been closed."; puts
               exit
@@ -163,8 +165,20 @@
         puts "The file has been sucessfully saved."; puts
     end
     
+    def load_file
+       puts "Enter the name of the file to load:"
+       file_to_load = gets.chomp
+       if !File.exists? file_to_load
+           puts "Error: File \"#{file_to_load}\" does not exist."; puts
+           return
+       end
+           filename = file_to_load
+           load_students(filename)
+    end
+    
     def load_students (filename = "students.csv") #If "try_load_students" does not supply the file, then the default is used.   
        @students = []           #Prevents file loaded array from being concatenated to current array.
+       
        file = File.open(filename,"r")
        file.readlines.each{|student|
            name, cohort, countryofbirth, hobbies, height, weight = student.chomp.split(",")
