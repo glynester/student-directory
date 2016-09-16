@@ -49,6 +49,7 @@
           when "4"
               load_students
           when "9"
+              puts "The program has been closed."; puts
               exit
           else
               puts "That selection was not recognised!!!"
@@ -64,9 +65,11 @@
         end
         while !name.empty?
             add_to_array(name, cohort, cob, hob, height, weight)
+            puts "Student has been sucessfully added."; puts
             arr2 = get_student_userdata
             name, cohort, cob, hob, height, weight = arr2
             if name.empty?
+                puts "You have exited data entry mode."; puts
                 puts "We now have #{@students.count} students entered." if @students.count > 1 
                 return
             end   
@@ -141,6 +144,7 @@
             end        
             count += 1
         end    
+        puts "Successfully displayed the list of students."; puts
     end    
     
     def print_footer
@@ -156,9 +160,11 @@
             file.puts csv_line
         end    
         file.close
+        puts "The file has been sucessfully saved."; puts
     end
     
     def load_students (filename = "students.csv") #If "try_load_students" does not supply the file, then the default is used.   
+       @students = []           #Prevents file loaded array from being concatenated to current array.
        file = File.open(filename,"r")
        file.readlines.each{|student|
            name, cohort, countryofbirth, hobbies, height, weight = student.chomp.split(",")
@@ -167,6 +173,7 @@
            add_to_array(name, cohort, countryofbirth, hobbies, height, weight)
        }
        file.close
+       puts "The file has been sucessfully loaded."; puts
     end  
     
     def try_load_students
