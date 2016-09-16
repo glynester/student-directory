@@ -1,4 +1,5 @@
-    #Does not handle commas in data entry when saved to csv. Commas need to be escaped or complete entry needs to be put in quotes.
+    require 'csv'
+    #Now does handle commas in data entry when saved to csv. 
     @students = []         #An empty array accessible to all methods.
     @student_st_lett = ""
     @default_cohort = "September"
@@ -180,14 +181,23 @@
     end
     
     def save_students(filename)
-        file = File.open(filename,"w")
-        @students.each do |student|
-            student_data = [student[:name],student[:cohort],student[:countryofbirth],student[:hobbies],student[:height],
-            student[:weight]]
-            csv_line = student_data.join(",")
-            file.puts csv_line
-        end    
-        file.close
+        CSV.open(filename, 'w') do |csv_object|
+            @students.each do |student|
+                student_data = [student[:name],student[:cohort],student[:countryofbirth],student[:hobbies],
+                student[:height],student[:weight]]
+                #print student_data; puts
+                csv_object << student_data          #The array is just passed to csv_object. It does not need to be made into a string joined with (",")
+            end
+        end
+
+        #file = File.open(filename,"w")
+        #@students.each do |student|
+        #    student_data = [student[:name],student[:cohort],student[:countryofbirth],student[:hobbies],student[:height],
+        #    student[:weight]]
+        #    csv_line = student_data.join(",")
+        #    file.puts csv_line
+        #end    
+        #file.close
         puts "The file has been sucessfully saved."; puts
     end
     
@@ -204,16 +214,20 @@
     
     def load_students (filename = "students.csv") #If "try_load_students" does not supply the file, then the default is used.   
        @students = []           #Prevents file loaded array from being concatenated to current array.
-       
-       file = File.open(filename,"r")
-       file.readlines.each{|student|
-           name, cohort, countryofbirth, hobbies, height, weight = student.chomp.split(",")
-           #@students << {name: name, cohort: cohort.to_sym, countryofbirth: countryofbirth.to_sym, hobbies: hobbies.to_sym,
-           #height: height.to_sym, weight: weight.to_sym}
-           add_to_array(name, cohort, countryofbirth, hobbies, height, weight)
-       }
-       file.close
-       puts "The file has been sucessfully loaded."; puts
+       CSV.foreach(filename, col_sep: ',') do |row|     #Col sep parameter defaults to comma anyway but included here anyway.
+            #print row; puts
+            name, cohort, countryofbirth, hobbies, height, weight = row
+            add_to_array(name, cohort, countryofbirth, hobbies, height, weight)
+       end
+       #file = File.open(filename,"r")
+       #file.readlines.each{|student|
+       #    name, cohort, countryofbirth, hobbies, height, weight = student.chomp.split(",")
+       #    #@students << {name: name, cohort: cohort.to_sym, countryofbirth: countryofbirth.to_sym, hobbies: hobbies.to_sym,
+       #    #height: height.to_sym, weight: weight.to_sym}
+       #    add_to_array(name, cohort, countryofbirth, hobbies, height, weight)
+       #}
+       #file.close
+       puts "The file has been successfully loaded."; puts
     end  
     
     def try_load_students
