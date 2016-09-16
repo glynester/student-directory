@@ -46,7 +46,8 @@
           when "2"
               show_students
           when "3"
-              save_students
+              #save_students
+              save_file
           when "4"
               #load_students
               load_file
@@ -54,7 +55,7 @@
               puts "The program has been closed."; puts
               exit
           else
-              puts "That selection was not recognised!!!"
+              puts "That selection was not recognised. Please enter a number corresponding to the choices above."
         end          
     end    
     
@@ -152,9 +153,34 @@
     def print_footer
         puts "Overall, we have #{@students.count} great student#{@students.count == 1 ? "." : "s."}"; puts
     end
+ 
+    def save_file
+        puts "Enter the name of the file to save to. Enter the name of an existing file or enter a new name to create a new file."
+        file_to_save = STDIN.gets.chomp
+        while file_to_save.empty?
+            puts "Name cannot be blank. Please enter the name you wish to save the file as."
+            file_to_save = STDIN.gets.chomp
+        end
+        if !File.exists? file_to_save
+            puts "File \"#{file_to_save}\" does not yet exist. Are you sure you wish to create it?"
+            puts "Press enter to create it or press \"n\" to cancel this operation."
+            #return
+            save_resp = STDIN.gets.chomp.downcase
+            while save_resp != "n" && !save_resp.empty?
+                puts "Please approve this operation by clicking enter or reject it by entering \"n\"."
+                save_resp = STDIN.gets.chomp.downcase
+            end 
+        end
+        if save_resp == "n"
+            puts "You have successfully cancelled this save operation."; puts
+        elsif save_resp.empty?         #User pressed enter to go ahead and save the file.
+            filename = file_to_save
+            save_students(filename)            
+        end
+    end
     
-    def save_students
-        file = File.open("students.csv","w")
+    def save_students(filename)
+        file = File.open(filename,"w")
         @students.each do |student|
             student_data = [student[:name],student[:cohort],student[:countryofbirth],student[:hobbies],student[:height],
             student[:weight]]
@@ -167,7 +193,7 @@
     
     def load_file
        puts "Enter the name of the file to load:"
-       file_to_load = gets.chomp
+       file_to_load = STDIN.gets.chomp
        if !File.exists? file_to_load
            puts "Error: File \"#{file_to_load}\" does not exist."; puts
            return
